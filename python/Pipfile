@@ -1,0 +1,16 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+requests = "*"
+tabulate = "*"
+future = "*"
+colorama = ">=0.3.8"
+h2o = {file = "http://h2o-release.s3.amazonaws.com/h2o/rel-yates/3/Python/h2o-3.24.0.3-py2.py3-none-any.whl"}
+
+[requires]
+python_version = "3.7"
