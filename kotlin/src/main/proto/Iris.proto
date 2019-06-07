@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "tech.thomaslegrand.h2o";
+option java_outer_classname = "IrisProto";
+option objc_class_prefix = "HLW";
+
+package h2o;
+
+service Predictor {
+  rpc Predict (IrisRequest) returns (IrisReply) {}
+}
+
+message IrisRequest {
+  double SepalLength = 1;
+  double SepalWidth = 2;
+  double PetalLength = 3;
+  double PetalWidth = 4;
+}
+
+message IrisReply {
+  string species = 1;
+}

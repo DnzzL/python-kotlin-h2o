@@ -9,12 +9,23 @@ import hex.genmodel.MojoReaderBackendFactory
 
 
 class Model {
-    fun convert_to_raw_data(request: Request): RowData {
+    private var model: EasyPredictModelWrapper
+
+    init {
+        val mojoURL = this::class.java.classLoader.getResource("rf_fit.zip")
+        val reader =
+            MojoReaderBackendFactory.createReaderBackend(mojoURL, MojoReaderBackendFactory.CachingStrategy.MEMORY)
+        val mojo = ModelMojoReader.readFrom(reader)
+        model = EasyPredictModelWrapper(mojo)
+    }
+
+
+    private fun convertToRawData(request: IrisRequest): RowData {
         val test = hashMapOf(
-            "SepalLength" to request.SepalLength,
-            "SepalWidth" to request.SepalWidth,
-            "PetalLength" to request.PetalLength,
-            "PetalWidth" to request.PetalWidth
+            "SepalLength" to request.sepalLength,
+            "SepalWidth" to request.sepalWidth,
+            "PetalLength" to request.petalLength,
+            "PetalWidth" to request.petalWidth
         )
         val testRow = RowData()
         test.forEach { (k, v) ->
@@ -23,21 +34,10 @@ class Model {
         return testRow
     }
 
-    fun predict(request: Request): String? {
-        val mojoURL = this::class.java.classLoader.getResource("rf_fit.zip")
-        val reader =
-            MojoReaderBackendFactory.createReaderBackend(mojoURL, MojoReaderBackendFactory.CachingStrategy.MEMORY)
-        val model = ModelMojoReader.readFrom(reader)
-        val modelWrapper = EasyPredictModelWrapper(model)
 
-        val testRow = convert_to_raw_data(request)
-        val prediction = modelWrapper.predict(testRow) as MultinomialModelPrediction
+    fun predict(request: IrisRequest): String? {
+        val testRow = convertToRawData(request)
+        val prediction = model.predict(testRow) as MultinomialModelPrediction
         return prediction.label
     }
-}
-
-fun main() {
-    val test = Request(2.0, 1.0, 1.5, 2.4)
-    val prediction = Model().predict(test)
-    println(prediction)
 }
