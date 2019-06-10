@@ -8,7 +8,7 @@ import java.util.logging.Level
 import java.util.logging.Logger
 
 /**
- * A simple client that requests a greeting from the [HelloWorldServer].
+ * A simple client that requests a greeting from the [IrisServer].
  */
 class IrisClient
 /** Construct client for accessing RouteGuide server using the existing channel.  */

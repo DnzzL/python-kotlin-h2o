@@ -38,6 +38,7 @@ class Model {
     fun predict(request: IrisRequest): String? {
         val testRow = convertToRawData(request)
         val prediction = model.predict(testRow) as MultinomialModelPrediction
+        print(prediction.label)
         return prediction.label
     }
 }

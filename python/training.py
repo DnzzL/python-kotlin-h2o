@@ -7,7 +7,6 @@ iris_path = "data/iris.csv"
 data = h2o.import_file(iris_path)
 print(f'data shape -- {data.shape}')
 
-data['Species'] = data['Species']
 levels = data['Species'].levels()
 print(f'encoded classes -- {levels}')
 
@@ -27,3 +26,4 @@ rf_perf = rf_fit.model_performance(test)
 print(rf_perf)
 
 rf_fit.save_mojo(f"models")
+h2o.save_model(rf_fit, f"models")

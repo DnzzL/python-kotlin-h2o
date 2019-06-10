@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"math/rand"
 	"sync"
 	"time"
 
@@ -49,10 +50,10 @@ func main() {
 			}()
 
 			request := &pb.IrisRequest{
-				PetalLength: 1.2,
-				PetalWidth:  1.8,
-				SepalLength: 1.6,
-				SepalWidth:  1.6,
+				PetalLength: rand.Float64(),
+				PetalWidth:  rand.Float64(),
+				SepalLength: rand.Float64(),
+				SepalWidth:  rand.Float64(),
 			}
 
 			if *debug == 0 {
